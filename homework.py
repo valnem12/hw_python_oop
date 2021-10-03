@@ -90,7 +90,8 @@ class Calculator:
                 return (
                     'Weekly cash spendings are '
                     f'{self.total_week_spendings(self.records):.2f}')
-            return self.total_week_spendings()
+
+        return self.total_week_spendings()
 
     def get_today_stats(self, currency=None):
         '''Returns todays' spendings.'''
