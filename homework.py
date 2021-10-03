@@ -6,7 +6,7 @@ DATE_FORMAT = '%d.%m.%Y'
 
 class Record():
     '''Createsa list of a new uploaded data.'''
-    
+
     def __init__(self, amount, comment=None, date=None) -> None:
         self.amount = amount
         self.comment = comment
@@ -36,7 +36,7 @@ class Calculator:
         self.limit = limit
         self.records = []
         self.now = dt.datetime.now().date()
-    
+
     def add_record(self, record):
         '''Adding record to calories burning history.'''
 
@@ -90,12 +90,11 @@ class Calculator:
                 return (
                     'Weekly cash spendings are '
                     f'{self.total_week_spendings(self.records):.2f}')
-                   
-        return self.total_week_spendings()
+            return self.total_week_spendings()
 
     def get_today_stats(self, currency=None):
         '''Returns todays' spendings.'''
-      
+
         if currency:
             conversion_rate = self.get_conversion_rate(currency)
             return self.total_today_spendings() / conversion_rate
@@ -148,7 +147,7 @@ class CashCalculator(Calculator):
 
         self.records = super().add_record(record)
         return self.records
-    
+
     def get_today_cash_remained(self, currency):
         '''Calculates remaining cash to spend today.'''
 
