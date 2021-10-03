@@ -1,3 +1,4 @@
+import enum
 import re
 import inspect
 from typing import Optional
@@ -61,7 +62,6 @@ class TestRecord:
         assert not hasattr(result, 'USD_RATE'), msg_err('dont_create_attr', 'USD_RATE', 'Record')
         assert not hasattr(result, 'EURO_RATE'), msg_err('dont_create_attr', 'EURO_RATE', 'Record')
 
-
 class TestCalculator:
 
     def test_init(self, init_limit, msg_err):
@@ -85,6 +85,7 @@ class TestCalculator:
 
     def test_get_today_stats(self, init_limit, data_records, msg_err):
         result = homework.Calculator(init_limit)
+     
         records, today, week = data_records
         for record in records:
             result.add_record(record)
@@ -109,6 +110,8 @@ class TestCalculator:
 
     def test_get_calories_remained(self, init_limit, msg_err):
         result = homework.Calculator(init_limit)
+        tt = [i.amount for c, i in enumerate(result.records) if i.date == dt.datetime.now().date()]
+        # print('TOTAL CALORIES: ', init_limit - sum(tt))
         assert not hasattr(result, 'get_calories_remained'), (
             msg_err('dont_create_method', 'get_calories_remained', 'Calculator')
         )
@@ -144,15 +147,22 @@ class TestCaloriesCalculator:
         for record in records:
             result.add_record(record)
 
+        # tt = [i.amount for c, i in enumerate(result.records) if i.date == dt.datetime.now().date()]
+        # print('TOTAL CALORIES: ', sum(tt))
+        # print('Left Today: ', init_limit - today)
         if today < init_limit:
+            # print(result.get_calories_remained())
             assert result.get_calories_remained() == positive_calories_remained(init_limit - today), (
                 msg_err('wrong_method', 'get_calories_remained', 'CaloriesCalculator')
             )
             result.limit = today - 200
+            # print('New LIMIT: ', result.limit )
+            # print('TEST: ',result.get_calories_remained())
             assert result.get_calories_remained() == negative_calories_remained, (
                 msg_err('wrong_method', 'get_calories_remained', 'CaloriesCalculator')
             )
         else:
+            # print('NNN')
             assert result.get_calories_remained() == negative_calories_remained, (
                 msg_err('wrong_method', 'get_calories_remained', 'CaloriesCalculator')
             )
