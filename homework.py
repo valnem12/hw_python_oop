@@ -19,7 +19,7 @@ class Record():
         if type(day) == str:
             return dt.datetime.strptime(day, DATE_FORMAT).date()
         # elif type(day) != str:
-        #     return day    
+        #     return day
         else:
             return dt.datetime.now().date()
 
@@ -111,13 +111,13 @@ class CaloriesCalculator(Calculator):
         self.records = []
 
     def get_calories_remained(self):
-        remained = (self.limit -
-                    self.get_today_stats())                            
+        remained = (self.limit
+                    - self.get_today_stats())
         if remained > 0:
-            return (f'Сегодня можно съесть что-нибудь ещё,'  
+            return (f'Сегодня можно съесть что-нибудь ещё,'
                     f' но с общей калорийностью не более {remained} кКал')
         else:
-            return 'Хватит есть!'  
+            return 'Хватит есть!'
 
 
 class CashCalculator(Calculator):
@@ -154,14 +154,14 @@ class CashCalculator(Calculator):
         if isinstance(super().get_conversion_rate(currency), str):
             return super().get_conversion_rate(currency)
         else:
-            remained = ((self.limit -
-                         self.total_today_spendings())
+            remained = ((self.limit
+                         - self.total_today_spendings())
                         / super().get_conversion_rate(currency))
 
             if remained > 0:
                 return (f'На сегодня осталось {remained:.2f} '
                         f'{self.currency_dict[currency]}')
-            elif remained == 0:  
+            elif remained == 0:
                 return 'Денег нет, держись'
             else:
                 return ('Денег нет, держись: твой долг - '
@@ -172,4 +172,4 @@ class CashCalculator(Calculator):
     def get_week_cash_remained(self, currency):
         '''Calculates spendings within last seven days.'''
 
-        return super().get_week_stats(currency) 
+        return super().get_week_stats(currency)
