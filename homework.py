@@ -2,10 +2,20 @@
 Thank you very much for your review.
 I highly appreciate the hard work you do.
 
-After your comments I feel I got a lighter
-and smarter code.
+I don't see a way to remove parenthesis in line 121
+since it contains a two rows expression.
 
-Special thanks for the links you attached.
+The comment about add_record in CashCalculator.
+The problem statement clearly says:
+
+Калькулятор денег должен уметь:
+
+ 1.  Сохранять новую запись о расходах методом add_record()
+
+Russian is not my primary language so I understood that I must
+set this method inside the CashCakculator
+
+Thank you for your brilliant explanations
 '''
 
 
@@ -47,15 +57,16 @@ class Calculator:
         "Adding record to calories burning history."
 
         self.records.append(record)
-        return self.records
 
     def today(self):
         "Returns today's date"
+
         self.now = dt.datetime.now().date()
         return self.now
 
     def total_today_spendings(self):
         "Calculates daily spendings."
+
         now = self.today()
         return sum(spent.amount for spent
                    in self.records
@@ -91,8 +102,7 @@ class CaloriesCalculator(Calculator):
         if remained > 0:
             return ('Сегодня можно съесть что-нибудь ещё,'
                     f' но с общей калорийностью не более {remained} кКал')
-        else:
-            return 'Хватит есть!'
+        return 'Хватит есть!'
 
 
 class CashCalculator(Calculator):
@@ -113,17 +123,13 @@ class CashCalculator(Calculator):
                               'eur': (self.EURO_RATE, 'Euro'),
                               'rub': (self.RUB_RATE, 'руб')}
 
-    def add_record(self, record):
-        "Adding new data to usage records"
-
-        self.records = super().add_record(record)
-        return self.records
-
     def get_today_cash_remained(self, currency):
         "Calculates remaining cash to spend today."
 
-        if not currency:
-            raise ValueError('Available options are: "rub", "usd" or "eur"')
+        currency_keys = ('", "').join(self.currency_dict)
+
+        if currency not in self.currency_dict:
+            raise ValueError(f'Available options are: "{currency_keys}"')
 
         else:
             remained = (super().remain()
@@ -131,7 +137,8 @@ class CashCalculator(Calculator):
 
             if remained == 0:
                 return 'Денег нет, держись'
-            elif remained > 0:
+
+            if remained > 0:
                 return (f'На сегодня осталось {remained:.2f} '
                         f'{self.currency_dict[currency][1]}')
             return ('Денег нет, держись: твой долг - '
