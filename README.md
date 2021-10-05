@@ -1,2 +1,2 @@
 # hw_python_oop
-Sprint 2. Итоговый проект. v.3
+Sprint 2. Итоговый проект. v.5
